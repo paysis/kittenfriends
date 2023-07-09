@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import ChatAvatar from '../components/ChatAvatar'
 import ChatApiField from '../components/ChatApiField'
 import ChatMessageInput from '../components/ChatMessageInput'
@@ -13,6 +13,8 @@ const Chat = () => {
     const [searchParams] = useSearchParams();
     const [messages, setMessages] = useState([]);
     const [messageInputEnabled, setMessageInputEnabled] = useState(true);
+
+    const navigate = useNavigate();
 
     const name = searchParams.get('name');
     const id = searchParams.get('id');
@@ -45,7 +47,7 @@ const Chat = () => {
     return (
         <>
             <div>
-                <a className="f3 ma3 georgia light-pink" href="/">Homepage</a>
+                <a className="f3 ma3 georgia light-pink" onClick={() => navigate("/")}>Homepage</a>
             </div>
             <div className="tc br3 pa3 ma2 db flex justify-between bw2">
                 <div className="flex justify-center items-center">

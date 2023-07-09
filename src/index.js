@@ -7,18 +7,18 @@ import Chat from './containers/Chat';
 import 'tachyons';
 // import registerServiceWorker from './registerServiceWorker';
 import {
-    createBrowserRouter,
+    createHashRouter,
     RouterProvider
 } from 'react-router-dom';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
     {
-        path: '/',
-        element: <App />
+        path: '/*',
+        element: <App />,
     },
     {
-        path: '/chat',
-        element: <Chat />
+        path: '/chat', // com/#/chat
+        element: <Chat />,
     }
 ])
 
