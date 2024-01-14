@@ -4,7 +4,14 @@ Tutorial for React (from Complete Web Developer in 2023: Zero to Mastery, custom
 ## Features
 
 - Lovely kittens
-- ChatGPT integration to have conversations with these lovely kittens.
+- OpenAI ChatGPT API integration to have conversations with these lovely kittens.
+- React
+- ReactDOM
+- Redux
+- Redux Thunk
+- Redux Logger
+- Tachyons
+- React Router (Hash Router)
 
 ## To run the project
 

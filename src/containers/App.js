@@ -4,42 +4,51 @@ import SearchBox from '../components/SearchBox';
 import Scroll from '../components/Scroll';
 import './App.css';
 
-class App extends Component {
-  constructor() {
-    super()
-    this.state = {
-      kittens: [],
-      searchfield: ''
+import { requestKittens, setSearchField } from "../actions"
+import { connect } from "react-redux"
+
+const mapStateToProps = state => {
+    return {
+        searchField: state.searchKittens.searchField,
+        kittens: state.requestKittens.kittens,
+        isPending: state.requestKittens.isPending,
+        error: state.requestKittens.error,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onSearchChange: event => dispatch(setSearchField(event.target.value)),
+        onRequestKittens: () => dispatch(requestKittens()) // thunk
     }
   }
 
-  componentDidMount() {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(response=> response.json())
-      .then(kittens => {this.setState({ kittens})});
+class App extends Component {
+  constructor() {
+    super()
   }
 
-  onSearchChange = (event) => {
-    this.setState({ searchfield: event.target.value })
+  componentDidMount() {
+    this.props.onRequestKittens();
   }
 
   render() {
-    const { kittens, searchfield } = this.state;
+    const { searchField, onSearchChange, kittens, isPending } = this.props;
     const filteredKittens = kittens.filter(kitten =>{
-      return kitten.name.toLowerCase().includes(searchfield.toLowerCase());
+      return kitten.name.toLowerCase().includes(searchField.toLowerCase());
     })
-    return !kittens.length ?
+    return isPending ?
       <h1>Loading</h1> :
       (
         <div className='tc'>
           <h1 className='f1'>KittenFriends</h1>
-          <SearchBox searchChange={this.onSearchChange}/>
+          <SearchBox searchChange={onSearchChange}/>
           <Scroll height="800px">
             <CardList kittens={filteredKittens} />
           </Scroll>
         </div>
       );
+    }
   }
-}
-
-export default App;
+  
+export default connect(mapStateToProps, mapDispatchToProps)(App);
